@@ -8,4 +8,4 @@
 
 ## SCSS Partials
 
-Includes a _global.scss file with commonly extended classes such as .clear and .center
+Includes an  _global.scss file with commonly extended classes such as .clear and .center
