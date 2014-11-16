@@ -1,0 +1,118 @@
+// Clearfix for encompassing floated elements that are taken out of the document flow
+
+// Usage
+// @extend .clear
+// Extend the clear-fix class on any parent element that contains floated elements
+.clear:before,
+.clear:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clear:after {
+    clear: both;
+}
+
+// Vertically center a div with an unknown height
+
+// Usage
+// parent: @extend .center-parent
+// child: @extend .center-child
+// Extend the center class for both the parent containing the div that needs to be centered
+
+.center-parent {
+  display: table;
+  width: 100%;
+}
+
+.center-child {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+// Jason's delay and reverse delay mixin for the fan effect of elements
+
+// Usage
+// active state: @include delay(1, 10, 10)
+// inactive state: @include reverse-delay(1, 10, 10)
+// Pass in the first elements nth-child (1) for first argument 
+// last elements nth-child as the second argument, and a divisor
+// for spanning out the delays
+@mixin reverse-delay($from, $to, $divisor) {
+  @for $i from $from through $to {
+    &:nth-child(#{$to - $i}) { @include transition-delay(#{$i/$divisor}s); }
+  }
+}
+
+@mixin delay($from, $to, $divisor) {
+  @for $i from $from through $to {
+    &:nth-child(#{$i}) { @include transition-delay(#{$i/$divisor}s); }
+  }  
+}
+
+// Social media links, includes hover state with correct colors
+
+// Usage
+// <div id="social">
+//   <a href="" target="_blank"><i class="fa tw fa-twitter s"></i></a>
+//   <a href="" target="_blank"><i class="fa fb fa-facebook s"></i></a>
+//   <a href="" target="_blank"><i class="fa li fa-linkedin s"></i></a>
+//   <a href="" target="_blank"><i class="fa in fa-instagram s"></i></a>
+//   <a href="" target="_blank"><i class="fa gp fa-google-plus s"></i></a>
+//   <a href="" target="_blank"><i class="fa pin fa-pinterest s"></i></a>
+// </div>
+
+.social {
+  margin-right: 0px;
+  text-align: center;
+
+  @media (min-width: $mobile) {
+    margin-right: 30px;
+    float: right;
+    text-align: left;
+  }
+  vertical-align: center;
+  line-height: 40px;
+  position: relative;
+  z-index: 2;
+
+  a {
+    display: inline-block;
+    margin-right: 10px;
+    width: 20px;
+    height: 40px;
+    text-align: center;
+
+    i {
+      font-size: 19px;
+      &:before {
+        color: $white;
+        @include transition(color $slow);
+      }
+    }
+    
+    &:hover {
+      i {
+        &.fb:before {
+          color: rgb(77, 90, 145);
+        }
+        &.tw:before {
+          color: rgb(119, 170, 232);
+        }
+        &.gp:before {
+          color: rgb(166, 78, 67);
+        }
+        &.li:before {
+          color: #007bb6;
+        }
+        &.in:before {
+          color: #517fa4;
+        }
+        &.pin:before {
+          color: #cb2027;
+        }
+      }
+    }
+  }
+}
